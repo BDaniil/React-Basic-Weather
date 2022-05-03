@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.place{
+    height: fit-content;
+    text-align: center;
+    color: gray;
+    font-size: larger;
+    margin: 1rem auto -1rem auto;
+}
+
