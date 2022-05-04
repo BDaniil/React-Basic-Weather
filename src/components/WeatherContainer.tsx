@@ -6,9 +6,9 @@ import "../styles/WeatherContainer.css";
 
 export default function WeatherContainer() {
   const [weather, setWeather] = useState<any>();
-  const [location, setLocation] = useState("London");
+  const [location, setLocation] = useState<string>("London");
 
-  const inputEl = useRef(null);
+  const inputEl = useRef<any>(null);
 
   const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=imperial&appid=03e44ee28287d44cd0b91fa6eceb3b43`;
 
@@ -19,9 +19,7 @@ export default function WeatherContainer() {
 
   const onKeyDownHandler = (e: { key: string }) => {
     if (e.key === "Enter") {
-      //@ts-ignore
       setLocation(inputEl.current.value);
-      //@ts-ignore
       inputEl.current.value = "";
     }
   };
