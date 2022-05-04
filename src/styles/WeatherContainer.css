@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    
+}
+.WeatherContainer .input-container{
+    display: flex;
 }
 
 .place{
@@ -9,6 +13,14 @@
     text-align: center;
     color: gray;
     font-size: larger;
-    margin: 1rem auto -1rem auto;
+    margin: 1rem auto 1rem auto;
+    border-radius: 0.3rem;
+}
+
+.location{
+    height: fit-content;
+    text-align: center;
+    color: gray;
+    margin-bottom: 1rem;
 }
 

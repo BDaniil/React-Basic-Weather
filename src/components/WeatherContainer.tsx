@@ -1,22 +1,54 @@
 import WeatherDayCard from "./WeatherDayCard";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 import "../styles/WeatherContainer.css";
 
-let region = prompt("Choose city");
-
 export default function WeatherContainer() {
+  const [weather, setWeather] = useState<any>();
+  const [location, setLocation] = useState("London");
+
+  const inputEl = useRef(null);
+
+  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=imperial&appid=03e44ee28287d44cd0b91fa6eceb3b43`;
+
+  async function getWeather(url: string) {
+    const weatherData = await axios.get(url);
+    return weatherData;
+  }
+
+  const onKeyDownHandler = (e: { key: string }) => {
+    if (e.key === "Enter") {
+      //@ts-ignore
+      setLocation(inputEl.current.value);
+      //@ts-ignore
+      inputEl.current.value = "";
+    }
+  };
+
+  const weatherDays = weather?.data?.list.filter(
+    (hours: number, index: number) => {
+      if (index % 8 === 0) {
+        return hours;
+      }
+    }
+  );
+
+  useEffect(() => {
+    getWeather(url).then((data: any) => setWeather(data));
+  }, [location]);
 
   return (
-    
     <div className="WeatherContainer">
-      <div className="place">{region}</div>
+      <div className="input-container">
+        <input ref={inputEl} onKeyDown={onKeyDownHandler} className="place" />
+      </div>
+      <div className="location">{location.toUpperCase()}</div>
       <div className="container">
-        
-        <WeatherDayCard dayOrder={1} region={region}/>
-        <WeatherDayCard dayOrder={2} region={region}/>
-        <WeatherDayCard dayOrder={3} region={region}/>
-        <WeatherDayCard dayOrder={4} region={region}/>
-        <WeatherDayCard dayOrder={5} region={region}/>
+        {weatherDays &&
+          weatherDays.map((el: any, index: number) => (
+            <WeatherDayCard key={el.dt} dayOrder={index} region={el} />
+          ))}
       </div>
     </div>
   );
